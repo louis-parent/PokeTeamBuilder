@@ -1,0 +1,295 @@
+@font-face
+{
+	font-family: "Pokemon Text";
+	src: url("fonts/pokemon_pixel.ttf") format("truetype");
+}
+
+@font-face
+{
+	font-family: "Pokemon Title";
+	src: url("fonts/pokemon_title.ttf") format("truetype");
+}
+
+.pokemon-text
+{
+	font-family: "Pokemon Text";
+}
+
+.pokemon-title
+{
+	font-family: "Pokemon Title";
+	color: #ffcb05;
+	--pokemon-title-border-size: 5px;
+	text-shadow: var(--pokemon-title-border-size) 0 0 #3b5ba7, calc(-1 * var(--pokemon-title-border-size)) 0 0 #3b5ba7, 0 var(--pokemon-title-border-size) 0 #3b5ba7, 0 calc(-1 * var(--pokemon-title-border-size)) 0 #3b5ba7, calc(var(--pokemon-title-border-size) / 2) calc(var(--pokemon-title-border-size) / 2) #3b5ba7, calc(-1 * (var(--pokemon-title-border-size) / 2)) calc(-1 * (var(--pokemon-title-border-size) / 2)) 0 #3b5ba7, calc(var(--pokemon-title-border-size) / 2) calc(-1 * (var(--pokemon-title-border-size) / 2)) 0 #3b5ba7, calc(-1 * (var(--pokemon-title-border-size) / 2)) calc(var(--pokemon-title-border-size) / 2) 0 #3b5ba7;
+}
+
+*
+{
+	font-family: "Pokemon Text";
+}
+
+body
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: start;
+	
+	background: #f0f0f0;
+}
+
+body.background
+{
+	overflow: hidden;
+	user-select: none;
+}
+
+h1
+{
+	margin: 0.5em;
+	
+	font-size: 4em;
+	text-align: center;
+}
+
+fieldset
+{
+	margin: 0.5em;
+	padding: 1em;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	
+	border: 1px solid black;
+	border-radius: 2em;
+	
+	background: #fff;
+}
+
+fieldset > .fieldrow:not(:last-child)
+{
+	margin-bottom: 1em;
+}
+
+fieldset .fieldrow
+{
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+fieldset .fieldcolumn
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+input[type=checkbox], input[type=radio], button, select
+{
+	cursor: pointer;
+}
+
+button[disabled]
+{
+	cursor: wait;
+}
+
+.team
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	
+	width: 100%;
+	
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+.pokemon-card
+{
+	width: 12vw;
+	height: 12vw;
+	min-width: 11em;
+	min-height: 11em;
+	
+	margin: 1em;
+	
+	position: relative;
+	
+	border-radius: 3em;
+
+	box-shadow: 10px 10px 10px gray;
+	
+	background: center / cover no-repeat url("../assets/background.jpg");
+}
+
+.pokemon-card > img
+{
+	height: 66%;
+	
+	position: absolute;
+	
+	top: 50%;
+	left: 50%;
+	
+	transform: translate(-50%, -50%);
+}
+
+.pokemon-card > select
+{	
+	width: calc(100% - 3em);
+	
+	position: absolute;
+	
+	bottom: 0.55em;
+	left: 1.5em;
+	right: 1.5em;
+	
+	text-align: center;
+	font-size: 0.9em;
+	
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.fullscreen-message
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	z-index: 100;
+	
+	width: 100vw;
+	height: 100vh;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	
+	color: white;
+	text-align: center;
+	
+	background: rgba(0, 0, 0, 0.90);
+}
+
+.fullscreen-message > img
+{
+	max-width: 33vw;
+	max-height: 66vh;
+}
+
+body.loading, body.error, body.searching
+{
+	overflow: hidden;
+}
+
+body.error
+{
+	cursor: not-allowed !important;
+}
+
+body.loading, body.searching
+{
+	cursor: wait !important;
+}
+
+body:not(.loading) > #loader
+{
+	display: none;
+}
+
+body:not(.error) > #error
+{
+	display: none;
+}
+
+body:not(.searching) > #searching
+{
+	display: none;
+}
+
+#pokedex
+{
+	visibility: hidden;
+	
+	position: absolute;
+	
+	top: 1.5em;
+	left: 1.5em;
+	
+	width: 5em;
+	height: 5em;
+	
+	z-index: 10000;
+	
+	cursor: pointer;
+	
+	padding: 0.5em;
+}
+
+#type-table
+{
+	position: absolute;
+	
+	top: 1.5em;
+	left: 1.5em;
+
+	z-index: 9999;
+	
+	width: calc(100vw - 3em);
+	height: calc(100vh - 3em);
+	
+	padding: 2em;
+	
+	background: #fff;
+	
+	border: solid black 1px;
+	border-radius: 2em;
+}
+
+#type-table:not(.show)
+{
+	visibility: hidden;
+}
+
+#type-table td, #type-table th
+{
+	text-align: center;
+	vertical-align: center;
+	padding: 0.1em;
+}
+
+#type-table > :nth-child(2) > :first-child
+{
+	writing-mode: vertical-rl;
+	text-orientation: upright;
+}
+
+#type-table td.immunity
+{
+	background: rgba(0, 0, 0, 0.25);
+}
+
+#type-table td.resistance
+{
+	background: rgba(0, 255, 0, 0.25);
+}
+
+#type-table td.weakness
+{
+	background: rgba(255, 0, 0, 0.25);
+}

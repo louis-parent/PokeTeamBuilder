@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<title>PokeTeam Builder</title>
+		<meta charset="UTF-8"/>
+		
+		<link rel="stylesheet" href="style/clear.css" />
+		<link rel="stylesheet" href="style/common.css" />
+		
+		<script src="script/Constraints.js"></script>
+		<script src="script/Pokeapi.js"></script>
+		<script src="script/PokeTeamBuilder.js"></script>
+	</head>
+	<body class="">
+		<img id="pokedex" src="assets/pokedex.png" alt="Pokedex" onclick="document.querySelector('#type-table').classList.toggle('show')" />
+		
+		<div id="loader" class="fullscreen-message">
+			<img src="assets/loader.gif"/>
+			<span>Fetching all pokemons data may take few moment...</span>
+		</div>
+		
+		<div id="error" class="fullscreen-message">
+			<img src="assets/error.gif"/>
+			<span>An unknown error occured. Please try again later...</span>
+		</div>
+		
+		<div id="searching" class="fullscreen-message">
+			<img src="assets/question.gif"/>
+			<span>We're looking for the best team with your criteria !</span>
+		</div>
+		
+		<h1 class="pokemon-title">PokeTeam Builder</h1>
+		
+		<fieldset>
+			<legend>Settings</legend>
+			<div class="fieldrow">
+				<label class="fieldcolumn">
+					<span>Minimal Generation :</span>
+					<select id="minGen" class="pokemon-filter"></select>
+				</label>
+				
+				<label class="fieldcolumn">
+					<span>Maximal Generation :</span>
+					<select id="maxGen" class="pokemon-filter"></select>
+				</label>
+			</div>
+			
+			<div class="fieldrow">
+				<span>Rarity of the team :</span>
+				<label><input id="useNormalPokemon" class="pokemon-filter" type="checkbox" value="normal" checked="true"/> Normal</label>
+				<label><input id="useMythicalPokemon" class="pokemon-filter" type="checkbox" value="mythical" checked="true"/> Mythical</label>
+				<label><input id="useLegendaryPokemon" class="pokemon-filter" type="checkbox" value="legendary" checked="true"/> Legendary</label>
+			</div>
+			
+			<button id="teamup" disabled="true">Let's Team Up!</button>
+		</fieldset>
+		
+		<div class="fieldrow">
+			<button id="randomize">Randomize</button>
+			<button id="clear">Clear</button>
+		</div>
+		
+		<div class="team">
+			<div id="team-1" class="pokemon-card">
+				<img src="assets/egg.png"/>
+				<select></select>
+			</div>
+			
+			<div id="team-2" class="pokemon-card">
+				<img src="assets/egg.png"/>
+				<select></select>
+			</div>
+			
+			<div id="team-3" class="pokemon-card">
+				<img src="assets/egg.png"/>
+				<select></select>
+			</div>
+			
+			<div id="team-4" class="pokemon-card">
+				<img src="assets/egg.png"/>
+				<select></select>
+			</div>
+			
+			<div id="team-5" class="pokemon-card">
+				<img src="assets/egg.png"/>
+				<select></select>
+			</div>
+			
+			<div id="team-6" class="pokemon-card">
+				<img src="assets/egg.png"/>
+				<select></select>
+			</div>			
+		</div>
+		
+		<table id="type-table"></table>
+	</body>
+</html>
