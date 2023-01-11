@@ -170,40 +170,51 @@ window.PokeAPI = {
 			});
 		},
 		getSpecies(species) {
-			return PokeAPI.request(["pokemon-species", species]).then(data => {
-				return PokeAPI.request(["pokemon-color", data.color?.name]).then(color => {
-					return PokeAPI.request(["pokemon-shape", data.shape?.name]).then(shape => {
-						return {
-							id: data.id,
-							name: data.name,
-							femaleRate: (data.gender_rate / 8) * 100,
-							captureRate: (data.capture_rate	/ 255) * 100,
-							baseHappiness: (data.base_happiness / 255) * 100,
-							isBaby: data.is_baby,
-							isLegendary: data.is_legendary,
-							isMythical: data.is_mythical,
-							hatchSteps: 255 * ((data.hatch_counter || 0) + 1),
-							hasGenderDifference: data.has_gender_differences,
-							areFormsSwitchable: data.forms_switchable,
-							growthRate: data.growth_rate?.name,
-							eggGroups: data.egg_groups.map(group => { return group?.name; }),
-							color: {
-								name: color.name,
-								localizedName: PokeAPI.nameTranslationsToMap(color.names)
-							},
-							shape: {
-								name: shape.name,
-								localizedName: PokeAPI.nameTranslationsToMap(shape.names)
-							},
-							evolvesFrom: data.evolves_from_species?.name,
-							habitat: data.habitat?.name,
-							generation: data.generation.name,
-							localizedName: PokeAPI.nameTranslationsToMap(data.names)
-						};
-					
-					});
-				});
+			return PokeAPI.request(["pokemon-species", species]).then(async data => {
+				const color = data.color?.name !== undefined ? (await PokeAPI.request(["pokemon-color", data.color.name])) : undefined;
+				const shape = data.shape?.name !== undefined ? (await PokeAPI.request(["pokemon-shape", data.shape.name])) : undefined;
+				return this.buildPokemon(data, color, shape);
 			});
+		},
+		
+		buildPokemon(species, color, shape) {
+			const pokemon = {
+				id: species.id,
+				name: species.name,
+				femaleRate: (species.gender_rate / 8) * 100,
+				captureRate: (species.capture_rate	/ 255) * 100,
+				baseHappiness: (species.base_happiness / 255) * 100,
+				isBaby: species.is_baby,
+				isLegendary: species.is_legendary,
+				isMythical: species.is_mythical,
+				hatchSteps: 255 * ((species.hatch_counter || 0) + 1),
+				hasGenderDifference: species.has_gender_differences,
+				areFormsSwitchable: species.forms_switchable,
+				growthRate: species.growth_rate?.name,
+				eggGroups: species.egg_groups.map(group => { return group?.name; }),
+				evolvesFrom: species.evolves_from_species?.name,
+				habitat: species.habitat?.name,
+				generation: species.generation.name,
+				localizedName: PokeAPI.nameTranslationsToMap(species.names)
+			};
+			
+			if(color !== undefined)
+			{
+				pokemon.color = {
+					name: color.name,
+					localizedName: PokeAPI.nameTranslationsToMap(color.names)
+				};
+			}
+			
+			if(shape !== undefined)
+			{
+				pokemon.shape = {
+					name: shape.name,
+					localizedName: PokeAPI.nameTranslationsToMap(shape.names)
+				};
+			}
+			
+			return pokemon;
 		}
 	}
 };
